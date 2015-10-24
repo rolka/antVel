@@ -1,0 +1,27 @@
+{
+  "name": "AntVel.com Store",
+  "version": "1.0.0",
+  "homepage": "https://github.com/wsimple/AntVel",
+  "authors": [
+    "info@antvel.com"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "vendor",
+    "node_modules",
+    "bower_components",
+    "vendor/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "ui-select": "angular-ui/ui-select#~0.11.2",
+    "angular-notify": "~2.5.0",
+    "angucomplete-alt": "~0.0.43"
+  }
+}

@@ -1,0 +1,18 @@
+# The file must not contain other characters besides the keys to record.
+# The keys must be separated by line breaks as shown in the example.
+#
+# example:
+# HQ70PL09PL75MJ55MM11
+# HQ71OX09PL76MJ55MM12
+# HQ72PL09PL77MJ55MM13
+# HQ73OX09PL78MJ55MM14
+# HQ74PL09PL79MJ55MM15
+# HQ75OX09PL70MJ55MM16
+# HQ76PL09PL70MJ55MM17
+# HQ77OX09PL79MJ55MM18
+# HQ78PL09PL78MJ55MM19
+# HQ79OX09PL77MJ55MM10
+# HQ70PL09PL76MJ55MM11
+# HQ71AX09PL75MJ55MM12
+#
+# Any breach of these regulations can create an error in the creation of their product.

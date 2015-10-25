@@ -5,7 +5,7 @@
 
 ***The best I loved was written it in Laravel***
 
-it was used the most stable and powerful platform to develop AntVel eCommerce, knowing in advance that you would be happy with the results provided by this product. Besides of, your customers will be happy as well. My goal is to give to you and clients the best eCommerse experience in a different aproach!
+it was used the most stable and powerful platform to develop AntVel eCommerce, knowing in advance that you would be happy with the results provided by this product. Besides of, your customers will be happy as well. My goal is to give to you and clients the best eCommerce experience in a different aproach!
 
 ***Features***
 * Responsivity 

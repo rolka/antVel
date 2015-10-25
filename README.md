@@ -25,6 +25,26 @@ it was used the most stable and powerful platform to develop AntVel eCommerce, k
 * Related Products 
 * Search Engine Optimization 
 * SalesReports
+* Wish Lists
+* Products Suggestions
+* Products Grouping
+* Addresses Book
+* User Profiles (Sellers & Buyers)
+* Produducts barcode
+* Administrative Panel (wpanel)
+* Users Orders list with action status (process, Placed, Cancel, Rated)
+* Products Rate 
+* Products Reviews
+* Virtual Products (products key download integrated) 
+* Free Products Module
+* Users Points
+* Virtual Products Delivery
+* Dinamic Products Features
+* Company Profile
+* Shopping Cart 
+* Users preferences control
+* Users Notifications
+* Company Info CMS
 
 ## Contact
 

@@ -15,7 +15,7 @@
 			<ul>
 				<li><a href="https://www.facebook.com/{{ $main_company['facebook'] }}" target="_blank">{{ trans('globals.facebook_label') }}</a></li>
 				<li><a href="https://twitter.com/{{ $main_company['twitter'] }}" target="_blank">{{ trans('globals.twitter_label') }}</a></li>
-				<li><a href="https://plus.google.com/u/0/+{{ $main_company['google_plus'] }}" target="_blank">{{ trans('globals.google_label') }}</a></li>
+				<li><a href="https://plus.google.com/u/0/{{ $main_company['google_plus'] }}" target="_blank">{{ trans('globals.google_label') }}</a></li>
 			</ul>
 		</div>
 

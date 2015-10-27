@@ -34,7 +34,7 @@ class Menu
                 ->whereNotIn('status', ['cancelled', 'closed'])
                 ->get()
                 ->count();
-            
+
             $menu=array_merge($menu, [
                 ['route'=> '/products/myProducts', 'text'=> trans('user.your_products'), 'icon'=>'glyphicon glyphicon-briefcase', 'cont'=> $productsLowStock],
                 ['route'=> '/orders/usersOrders', 'text'=> trans('user.your_sales'), 'icon'=>'glyphicon glyphicon-piggy-bank', 'cont' => $salesOpen ],
@@ -115,16 +115,16 @@ class Menu
     public static function help($returnArray=false)
     {
         //Menu para empresas
-        
+
             $menu = [
-                ['route' =>'#',      'text'=> trans('globals.faq'),   ],
+                // ['route' =>'#',      'text'=> trans('globals.faq'),   ],
                 ['route' =>'/about','text'=> trans('company.about_us'),  ],
                 ['route' =>'/refunds','text'=> trans('company.refund_policy'),  ],
                 ['route' =>'/privacy', 'text'=> trans('company.privacy_policy'),    ],
                 ['route' =>'/terms', 'text'=> trans('company.terms_of_service'), 'divider'=>1 ],
                 ['route' =>'/contact', 'text'=> trans('about.contact_us'),  ],
             ];
-        
+
 
         return $returnArray ? $menu : json_encode($menu);
     }

@@ -27,7 +27,7 @@
 			<ul class="nav navbar-nav">
 
 				@include('user.partial.menu_top')
-				
+
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 						<span class="fui fui-heart"></span>{{ trans('store.wish_list') }}
@@ -46,7 +46,7 @@
 						@elseif(!Auth::user() && is_array(Session::get('user.cart_content')) && array_sum(Session::get('user.cart_content')))
 						<span class="badge badge-cart">{{{ array_sum(Session::get('user.cart_content')) }}} </span>
 						@endif
-						
+
 						<span class="glyphicon glyphicon-shopping-cart"></span>{{{ trans('store.cart') }}}
 						<span class="caret"></span>
 					</a>
@@ -56,11 +56,11 @@
                             @foreach(Auth::user()->getCartContent() as $orderDetail)
                                 <li>
                                     <a href="{{ route('products.show',[$orderDetail->product->id]) }}" >
-                   
+
                                             <img src="{{ $orderDetail->product->FirstImage }}" alt="{{ $orderDetail->product->name }}" width="32" height="32" style="float: left; margin-right: 2px"/>
                                             {{ $orderDetail->product->name }}
                                              - {{ trans('store.quantity') }}: {{ $orderDetail->quantity }}
-                            
+
                                     </a>
                                 </li>
                             @endforeach
@@ -72,11 +72,11 @@
                         @if($product=\App\Product::find($product_id))
                             <li>
                                 <a href="{{ route('products.show',[$product_id]) }}" >
-                     
+
                                         <img src="{{ $product->first_image }}" width="32" height="32" style="float: left; margin-right: 2px"/>
                                         {{ $product->name }}
                                          - {{ trans('store.quantity') }}: {{ $quantity }}
-                                  
+
                                 </a>
                             </li>
                         @endif
@@ -85,7 +85,7 @@
                         </ul>
                     @endif
 				</li>
-				
+
 				@if(Auth::user())
 					<li class="dropdown " id="push-notices" ng-controller="PushNoticesController"  ng-click="check()" ng-focus="check()">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -102,7 +102,7 @@
 							<li>{!! link_to('user/notices/list', trans('globals.all')) !!}</li>
 						</ul>
 					</li>
-					
+
 					@if (config('app.offering_user_points'))
 					<li>
 						<a href="{{ route('paypal.buy_points') }}" ng-controller = "PushUsersPoints" ng-init = "pusher()">
@@ -112,7 +112,7 @@
 					</li>
 					@endif
 				@endif
-				
+
 				@if (config('app.offering_free_products'))
 					<li>
 						<a href="{{ route('freeproducts.search') }}">
@@ -150,9 +150,9 @@
 				</ul>
 			</span>
 			<input type="hidden" name="category" value="[[refine() || '{{Request::get('category')}}']]"/>
-			
+
 			@include('partial.search_box',['angularController' => 'AutoCompleteCtrl', 'idSearch'=>'search'])
-			
+
 			<span class="input-group-btn">
 				<button class="btn btn-default fui-search" type="submit"></button>
 			</span>

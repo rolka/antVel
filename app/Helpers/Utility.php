@@ -40,7 +40,7 @@ class Utility
         } else {
             $options['amount']=$arg;
         }
-            
+
         switch (config('app.payment_method')) {
 
               case 'Points':
@@ -51,8 +51,8 @@ class Utility
                    }
 
                    return $points;
-                
-              
+
+
               default:
 
                   setlocale(LC_MONETARY, config('app.lc_monetary'));
@@ -150,28 +150,28 @@ class Utility
 
         $orders->each(function ($order, $key) use (&$summary) {
             $total = self::totalOrder($order->details);
-            
+
             switch ($order->status) {
                 case 'open':
                   $summary['open']['qty']++;
                   $summary['open']['total'] += $total['total'];
                 break;
-                
+
                 case 'pending':
                   $summary['pending']['qty']++;
                   $summary['pending']['total'] += $total['total'];
                 break;
-                
+
                 case 'sent':
                   $summary['sent']['qty']++;
                   $summary['sent']['total'] += $total['total'];
                 break;
-                
+
                 case 'closed':
                   $summary['closed']['qty']++;
                   $summary['closed']['total'] += $total['total'];
                 break;
-                
+
                 case 'cancelled':
                   $summary['cancelled']['qty']++;
                   $summary['cancelled']['total'] += $total['total'];
@@ -295,7 +295,7 @@ class Utility
     /**
      * requestToArrayUnique
      * this method is able to return a unique multidimensional array
-     * @param  [array] $request is the evaluated array 
+     * @param  [array] $request is the evaluated array
      * @return [array] unique index array
      */
     public static function requestToArrayUnique($request)
@@ -308,7 +308,7 @@ class Utility
                 if ($key == 'category') {
                     $aux = explode('|', $value);
                     $refine[$key] = $aux[0];
-                    $refine['category_name'] = $aux[1];
+                    $refine['category_name'] = isset($aux[1]) ? $aux[1] : '';
                 }else {
                     $refine[$key] = $value;
                 }
@@ -333,12 +333,12 @@ class Utility
         {
             if ($_key != 'category_name') { //validating no category name in the url
                 if ($_key == $key) {
-                    $query .= $_key.'='.urlencode($value).'&'; 
+                    $query .= $_key.'='.urlencode($value).'&';
                     $passed = true;
-                }else { 
+                }else {
                     //if there is a category the category value is built
                     $_value = $_key == 'category' ? $_value.'|'.$refine['category_name'] : $_value;
-                    $query .= $_key.'='.urlencode($_value).'&'; 
+                    $query .= $_key.'='.urlencode($_value).'&';
                 }
             }
         }

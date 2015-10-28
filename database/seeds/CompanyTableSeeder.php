@@ -22,7 +22,7 @@ class CompanyTableSeeder extends Seeder
 
             $domain=$userName.$faker->randomElement(['.com', '.net', '.org']);
 
- 
+
             Company::create([
                 'status' => $faker->randomElement(['active', 'inactive']),
                 'name' => $companyName,
@@ -37,6 +37,7 @@ class CompanyTableSeeder extends Seeder
                 'city' => $faker->city,
                 'zip_code' => $faker->postcode,
                 'facebook' => $userName,
+                'google_plus' => $userName,
                 'facebook_app_id' => $faker->md5,
                 'twitter' => $userName,
                 'email' => 'info@'.$domain,

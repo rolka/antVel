@@ -33,6 +33,7 @@ class CreateCompanyTable extends Migration
             $table->string('website')->nullable();
             $table->string('twitter')->nullable();
             $table->string('facebook')->nullable();
+            $table->string('google_plus')->nullable();
             $table->string('facebook_app_id')->nullable();
             $table->longText('description');
             $table->longText('keywords');

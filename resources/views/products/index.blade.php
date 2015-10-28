@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-    
+
     <div id="menu-top-category" class="container">
          <div class="row">&nbsp;</div>
          <ol class="breadcrumb">
@@ -18,16 +18,16 @@
             </li>
             <?php $filterSelected = []; ?>
             @foreach ($refine as $key => $value)
-                @if (trim($value)!='' && $key != 'category_name')
+                @if (trim($value)!='' && $key != 'category_name' && $key != 'page')
                     <li>
                         <small>
-                            <?php  
-                                switch ($key) 
+                            <?php
+                                switch ($key)
                                 {
                                     case 'max': $breadcrumb = trans('globals.max_price_label'); break;
                                     case 'min': $breadcrumb = trans('globals.min_price_label'); break;
                                     case 'category': $breadcrumb = $key; $value = $refine['category_name']; break;
-                                    case 'search': $breadcrumb = trans('globals.result_for'); break; 
+                                    case 'search': $breadcrumb = trans('globals.result_for'); break;
                                     default: $breadcrumb = $key; break;
                                 }
                                 $filterSelected[$key] = [
@@ -41,19 +41,19 @@
                             </a>
                         </small>
                     </li>
-                @endif    
+                @endif
             @endforeach
-            
+
          </ol>
     </div>
- 
+
     @parent
 
     @section('panel_left_content')
         <div  class="vertical-nav">
-            
+
             <div class="navbar navbar-default" role="navigation">
-                
+
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
                         <span class="sr-only">{{ trans('globals.refine') }}</span>
@@ -65,7 +65,7 @@
                 </div>
 
                 <div id="menu-left-category" class="navbar-collapse collapse sidebar-navbar-collapse" ng-cloak>
-                    
+
                     <div class="filters-applied ng-cloak visible-xs" ng-show="filters" >
                         <span ng-repeat="filter in filters">
                             <button type="button" class="text-capitalize btn btn-warning btn-xs"  ng-click="removeFilter(filter)">
@@ -74,7 +74,7 @@
                             </button>
                         </span>
                     </div>
-                    
+
                    @foreach ($filters as $key => $filter)
                         {{-- filter menu --}}
                         <ul class="nav navbar-nav {{ $key }}" >
@@ -88,7 +88,7 @@
                                             {{ ucfirst($item['name']) }} <small><span class="badge">{{ $item['qty'] }}</span></small>
                                         </a>
                                     </li>
-                                @endforeach 
+                                @endforeach
 
                             @else
 
@@ -144,7 +144,7 @@
 
                         {{-- end see more     --}}
                         @if ($i > 6)
-                            <small ng-controller="ModalCtrl" ng-click="modalOpen({templateUrl:'{{ $key }}-snippet', size: 'md'})" > 
+                            <small ng-controller="ModalCtrl" ng-click="modalOpen({templateUrl:'{{ $key }}-snippet', size: 'md'})" >
                                 <a href="javascript:void(0)">
                                     <span class="glyphicon glyphicon-zoom-in"></span>&nbsp;
                                     {{ trans('globals.see_more') }}
@@ -217,7 +217,7 @@
                     @endforeach
                 </div>
             @else
-                <div class="row">            
+                <div class="row">
                     <div class="alert alert-warning alert-dismissible" role="alert">
                         <div class="row">
                             <div class="col-md-12">
@@ -237,7 +237,7 @@
                     </div>
                 </div>
             @endif
-            
+
             @if(isset($suggestions) && is_array($suggestions) && count($suggestions) > 0)
                 <div class="row">&nbsp;</div>
                 <div class="row">&nbsp;</div>

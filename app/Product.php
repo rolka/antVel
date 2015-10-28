@@ -155,8 +155,8 @@ class Product extends Model
                 break;
 
                 default:
-                    if ($key != 'category_name' && $key != 'search') {
-                        $query->whereRaw("features LIKE '%\"".$key."\":%\"%".$value."%\"%'"); 
+                    if ($key != 'category_name' && $key != 'search' && $key != 'page') {
+                        $query->whereRaw("features LIKE '%\"".$key."\":%\"%".$value."%\"%'");
                     }
                 break;
             }

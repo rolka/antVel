@@ -42,10 +42,10 @@ class Authenticate
         }
 
         /**
-         * If there is something saved into the guest cart. Its content will be transfer
+         * If there is products into the guest cart, its content is transferred
          * to a logged user 'cart' order.
          */
-        
+
         if (\Illuminate\Support\Facades\Session::has('user.cart_content')) {
             $ordersController = new OrdersController();
             $ordersController->fromGuestToUser($ordersController);

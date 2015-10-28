@@ -55,7 +55,7 @@ app.controller('AutoCompleteGroupCtrl', function($scope, $http, notify, $compile
 	$scope.selectedItem = function(result){
 
 	   $http.post(
-			'productsGroup', 
+			'productsGroup',
 			{ignoreLoadingBar : true,
 			 group : $('#group_id').val(),
 			 id : result.originalObject.id}
@@ -76,14 +76,14 @@ app.controller('AutoCompleteGroupCtrl', function($scope, $http, notify, $compile
 				          '</td>'+
 				        '</tr>';
 
-				$('.grouped_list').append(html); 
+				$('.grouped_list').append(html);
 				$compile($('.grouped_list'))($scope);
 				$('#searchGroup_value').val('');
 				notify({duration:5000, messageTemplate: '<p>'+data.message+'!</p>', classes:'alert alert-success'});
 
-			}  
+			}
 
-		});	
+		});
 	};
 });
 
@@ -96,14 +96,14 @@ app.controller('listGroupCtrl', function($scope, $http, notify) {
 
 			if(data.deleteAll){
 
-				$('.grouped_list').html(''); 
+				$('.grouped_list').html('');
 
 			}else{
 
 				$("#product_"+id).remove();
-			}  
+			}
 			notify({duration:5000, messageTemplate: '<p>'+data.message+'!</p>', classes:'alert alert-success'});
-		});	
+		});
 	};
 });
 
@@ -116,7 +116,7 @@ app.controller('ModalCtrl', function($scope, $modal){
 			opts.resolve = 'data';
 
 		}
-		
+
 		var obj= {},literal = opts.resolve;
 		obj[literal] = function (){ return $scope.data; };
 
@@ -233,12 +233,34 @@ app.controller('LoginController',['$scope','$http',function($scope, $http){
 }]);
 
 //Control de categorias
-app.controller('CategoriesController',['$scope','$http',function($scope, $http){
 
+/**
+ * Categories Controller
+ * Save the selected category into "category" hidden, in order to use it in the search
+ */
+app.controller('CategoriesController',['$scope','$http',function($scope, $http)
+{
+	/**
+	 * catSelected
+	 * Category var model
+	 */
 	$scope.catSelected = {};
-	$scope.refine=function(){
-		return $scope.catSelected.id ? $scope.catSelected.id :'';
+
+	/**
+	 * refine
+	 * assign the category info to form hidden named "category"
+	 */
+	$scope.refine = function()
+	{
+		return $scope.catSelected.id ? $scope.catSelected.id+'|'+$scope.catSelected.name :'';
 	};
+
+	/**
+	 * setCategorie
+	 * assign the category info to Category var model
+	 * @param {int} id category id
+	 * @param {string} cat category name
+	 */
 	$scope.setCategorie = function(id, cat){
 		$scope.catSelected.name = cat;
 		$scope.catSelected.id = id;
@@ -263,7 +285,7 @@ app.controller('WishListControllerModal', function($scope, $http, $rootScope,$mo
                         $modalInstance.close();
                         if(productId){
                         	window.location.replace('/products/'+productId);
-                        }else{                        	
+                        }else{
                         	window.location.replace('/wishes/directory');
                         }
                     }else{
@@ -317,7 +339,7 @@ app.controller('CommentControllerModal', function($scope, $http, $rootScope,$mod
  * Services to pass a var between controllers
  */
 app.service('PassInfo', function ()
-{        
+{
        	var property = '';
 
         return {
@@ -339,7 +361,7 @@ app.controller('AddressesControllerModal', function($scope, $http, $rootScope, $
 	/**
 	 * auxCallBack
 	 * it is the scope bettwen address list and the modal. auxCallBack contains the callback url, so the controller
-	 * knows where to gos after process either a update or a insert 
+	 * knows where to gos after process either a update or a insert
 	 * @type {[type]}
 	 */
 	var auxCallBack = PassInfo.getProperty();
@@ -357,23 +379,23 @@ app.controller('AddressesControllerModal', function($scope, $http, $rootScope, $
 	 * @return [json] countries list
 	 */
 	$scope.getCountries = function()
-	{	
+	{
 		$http.get('https://restcountries.eu/rest/v1/all')
-			.success(function(data, status) 
+			.success(function(data, status)
 			{
 				$scope.countries = data;
-			});	
+			});
 	};
 
 	$scope.getCountries();
-	
+
 	$scope.create = function()
-	{	
+	{
 		$http.put('/user/address/store', $scope._address).
 			success(function(data, status)
 			{
 				if (data.success)
-				{	
+				{
 					$modalInstance.close();
 					$window.location.href = auxCallBack != '' ? auxCallBack : data.callback;
 				}
@@ -384,15 +406,15 @@ app.controller('AddressesControllerModal', function($scope, $http, $rootScope, $
 				}
 			});
 	};
-	
+
 	$scope.update = function(){
 
 		$http.put('/user/address/'+$scope._address.id, $scope._address).
-			
+
 			success(function(data, status) {
 
 				if (data.success)
-				{	
+				{
 					$modalInstance.close();
 					$window.location.href = auxCallBack != '' ? auxCallBack : data.callback;
 				}
@@ -414,16 +436,16 @@ app.controller('getKeysVirtualProducts',function($scope,$http,data){
     $scope.thisShow=true;
     $http.get('/showAllKeys/'+data.data).success( function(data) {
         if (data.message){
-            $scope.message=data.message; 
+            $scope.message=data.message;
     		$scope.show=true;
         }else $scope.keys=data;
     });
     $scope.change=function(id){
     	$http.get('/deleteKey/'+id).success( function(data) {
         	if (data.message)
-	        	$scope.message=data.message; 
+	        	$scope.message=data.message;
 	        else{
-	        	$scope.message=data.success; 
+	        	$scope.message=data.success;
 			    $scope.class='alert-success';
 	        }
     		$scope.show=true;
@@ -439,7 +461,7 @@ app.controller('getDetailsProductInCart',function($scope,$http,data){
     $scope.thisShow=true;
     $http.get('/showDetailsProductCart/'+data.data).success( function(data) {
         if (data.message){
-            $scope.message=data.message; 
+            $scope.message=data.message;
     		$scope.show=true;
         }else{
         	$scope.per=true;
@@ -453,24 +475,24 @@ app.controller('getDetailsProductInCart',function($scope,$http,data){
     var changeKey=function(email,action){
 
     	var obj=false;
-    	if (action=='all'){ 
+    	if (action=='all'){
     		obj={'email':email,'delete':true};
     	}
-    	else if(action==1){ 
-    		obj={'email':email,'increment':true}; 
+    	else if(action==1){
+    		obj={'email':email,'increment':true};
     	}
-    	else if(action==-1){ 
-    		obj={'email':email,'decrement':true}; 
+    	else if(action==-1){
+    		obj={'email':email,'decrement':true};
     	}
 
     	if (obj){
 	    	$http.post('/editKeyVirtualProductsOrders/'+data.data,obj).success(function(data) {
 	    		if (data.message){
-		            $scope.message=data.message; 
+		            $scope.message=data.message;
 		    		$scope.show=true;
 		        }else{
 		        	if (data.all) document.getElementById(email).style.display='none';
-		        	else{ 
+		        	else{
 		        		document.getElementById(email).children[0].children[0].innerHTML=data.num;
 		        		console.log(document.getElementById(email).children[0].children);
 		        		// document.querySelector("#"+email).innerHTML=data.num;
@@ -487,7 +509,7 @@ app.controller('getDetailsProductInCart',function($scope,$http,data){
         	if (data.message)
 	        	$scope.message=data.message;
 	        else{
-	        	$scope.message=data.success; 
+	        	$scope.message=data.success;
 			    $scope.class='alert-success';
 	        }
     		$scope.show=true;
@@ -501,7 +523,7 @@ app.controller('seeKeysPurchased',function($scope,$http,data){
     $http.get('/user/showKeyVirtualProductPurchased/'+data.data+'/'+data.order).success( function(data) {
         console.log(data);
         if (data.message){
-            $scope.message=data.message; 
+            $scope.message=data.message;
     		$scope.show=true;
         }else{
         	$scope.info=data.info;
@@ -520,11 +542,11 @@ app.controller('PushUsersPoints', ['$scope', '$http', '$interval', function($sco
 	$scope.pusher = function()
 	{
 		$http.get('getPoints', { ignoreLoadingBar: true } ).success(function(data)
-        { 
+        {
         	if (data.points) {
         		$scope.points = data.points;
 
-        	}	
+        	}
         });
 	};
 
@@ -534,7 +556,7 @@ app.controller('PushUsersPoints', ['$scope', '$http', '$interval', function($sco
 
 app.controller('ProductBox', ['$scope', '$window', function($scope, $window)
 {
-	
+
 	$scope.goTo = function (url)
     {
         $window.location.href = url;
@@ -543,27 +565,27 @@ app.controller('ProductBox', ['$scope', '$window', function($scope, $window)
     $scope.submit = function(id) {
         $(id).submit();
     };
-    
+
 }]);
 
 app.controller('DataPickerCtrl', function($scope)
 {
-  	$scope.open = function($event) 
+  	$scope.open = function($event)
   	{
     	$scope.status.opened = true;
   	};
 
-	$scope.status = 
+	$scope.status =
 	{
 		opened: false
 	};
 
-	$scope.open2 = function($event) 
+	$scope.open2 = function($event)
   	{
     	$scope.status2.opened = true;
   	};
 
-	$scope.status2 = 
+	$scope.status2 =
 	{
 		opened: false
 	};

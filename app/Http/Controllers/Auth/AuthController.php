@@ -89,7 +89,7 @@ class AuthController extends Controller
         \Mail::queue('emails.accountVerification', ['data' => $data, 'title' => $title, 'name' => $name], function ($message) use ($data) {
             $message->to($data['email'])->subject(trans('user.emails.verification_account.subject'));
         });
-        
+
         \Session::put('message', trans('user.signUp_message', ['_name' => $name ]));
 
         \Session::save();
@@ -134,7 +134,7 @@ class AuthController extends Controller
             if (!env('APP_DEBUG', false)) {
                 $validate['g-recaptcha-response'] = 'required|recaptcha';
             }
-            
+
             $this->validate($request, $validate);
 
             $credentials = $this->getCredentials($request);

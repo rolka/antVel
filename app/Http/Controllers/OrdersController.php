@@ -63,87 +63,84 @@ class OrdersController extends Controller
 
         $user = \Auth::user();
 
+        //dd($destination, $productId, $request->get('quantity'), $request);
+
         //checking if the user is logged
+
         if ($user) {
-            if ($product->user_id == $user->id) {
-                return redirect()->route('orders.show_wish_list', [$product->id])
-                    ->withErrors([
-                        'feature_images' => [trans('store.cantAddSelfProducts')]
-                ]);
-            } else {
-                $basicCart = Order::ofType($destination)->where('user_id', $user->id)->first();
 
-                if (!$basicCart) {
-                    $basicCart = new Order();
-                    $basicCart->user_id = $user->id;
-                    $basicCart->type = $destination;
-                    $basicCart->status = 'open';
-                    $basicCart->save();
+            $basicCart = Order::ofType($destination)->where('user_id', $user->id)->first();
 
-                    $log = Log::create([
-                        'action_type_id' => '1',
-                        'details' => $destination,
-                        'source_id' => $basicCart->id,
-                        'user_id' => $user->id
-                    ]);
-                }
-
-                //if the request has an email address, we keep it, otherwise we use the user one
-                if ($request->has('email')) {
-                    $v = Validator::make($request->all(), ['email' => 'required|email']);
-                    if ($v->fails()) {
-                        $email = $user->email;
-                    } else {
-                        $email = $request->input('email');
-                    }
-                } else {
-                    $email = $user->email;
-                }
-
-                //creating visrtual order
-                if ($destination != 'wishlist') {
-                    $this->addToCartVirtualsProduct($product, $email, $basicCart->id, $quantity);
-                }
-
-                //checking if the user already has a product so it can be added
-                $orderDetail = OrderDetail::where('order_id', $basicCart->id)
-                    ->where('product_id', $product->id)
-                    ->first();
-
-                //creating the order detail
-                if ($orderDetail) {
-                    $orderDetail->price = $product->price;
-                    $orderDetail->quantity = $orderDetail->quantity + $quantity;
-                } else {
-                    $orderDetail = new OrderDetail();
-                    $orderDetail->order_id = $basicCart->id;
-                    $orderDetail->product_id = $product->id;
-                    $orderDetail->price = $product->price;
-                    $orderDetail->quantity = $quantity;
-                    $orderDetail->status = 1;
-                }
-
-                //saving detail order
-                $orderDetail->save();
+            if (!$basicCart) {
+                $basicCart = new Order();
+                $basicCart->user_id = $user->id;
+                $basicCart->type = $destination;
+                $basicCart->status = 'open';
+                $basicCart->save();
 
                 $log = Log::create([
-                    'action_type_id' => '4',
-                    'details' => $basicCart->id,
-                    'source_id' =>$orderDetail->id,
-                    'user_id' =>$user->id
+                    'action_type_id' => '1',
+                    'details' => $destination,
+                    'source_id' => $basicCart->id,
+                    'user_id' => $user->id
                 ]);
+            }
 
-                //choosing what destination to go back
-                if ($destination == 'wishlist') {
-                    Session::push('message', trans('store.productAddedToWishList'));
-                    return redirect()->route('orders.show_wish_list');
-                } elseif ($destination == 'later') {
-                    Session::push('message', trans('store.productsSavedForLater'));
-                    return redirect()->route('products.show', [$productId]);
+            //if the request has an email address, we keep it, otherwise we use the user one
+            if ($request->has('email')) {
+                $v = Validator::make($request->all(), ['email' => 'required|email']);
+                if ($v->fails()) {
+                    $email = $user->email;
                 } else {
-                    Session::push('message', trans('store.productAdded'));
-                    return redirect()->route('orders.show_cart');
+                    $email = $request->input('email');
                 }
+            } else {
+                $email = $user->email;
+            }
+
+            //creating visrtual order
+            if ($destination != 'wishlist') {
+                $this->addToCartVirtualsProduct($product, $email, $basicCart->id, $quantity);
+            }
+
+            //checking if the user already has a product so it can be added
+            $orderDetail = OrderDetail::where('order_id', $basicCart->id)
+                ->where('product_id', $product->id)
+                ->first();
+
+            //creating the order detail
+            if ($orderDetail) {
+                $orderDetail->price = $product->price;
+                $orderDetail->quantity = $orderDetail->quantity + $quantity;
+            } else {
+                $orderDetail = new OrderDetail();
+                $orderDetail->order_id = $basicCart->id;
+                $orderDetail->product_id = $product->id;
+                $orderDetail->price = $product->price;
+                $orderDetail->quantity = $quantity;
+                $orderDetail->status = 1;
+            }
+
+            //saving detail order
+            $orderDetail->save();
+
+            $log = Log::create([
+                'action_type_id' => '4',
+                'details' => $basicCart->id,
+                'source_id' =>$orderDetail->id,
+                'user_id' =>$user->id
+            ]);
+
+            //callback url
+            if ($destination == 'wishlist') {
+                Session::push('message', trans('store.productAddedToWishList'));
+                return redirect()->route('orders.show_wish_list');
+            } elseif ($destination == 'later') {
+                Session::push('message', trans('store.productsSavedForLater'));
+                return redirect()->route('products.show', [$productId]);
+            } else {
+                Session::push('message', trans('store.productAdded'));
+                return redirect()->route('orders.show_cart');
             }
         }
 
@@ -1889,13 +1886,16 @@ class OrdersController extends Controller
          */
         $cart_content = Session::get('user.cart_content');
 
+        //dd($cart_content, Session::get('user.cart'));
+
         foreach (Session::get('user.cart_content') as $product => $value) {
             $ordersController->addToOrder(
                 'cart',
                 $product,
                 new Request(
                     [
-                        'quantity' => $cart_content[$product] != '' ? $cart_content[$product] : 1
+                        'quantity' => $cart_content[$product] != '' ? $cart_content[$product] : 1,
+                        'guestToUser' => 1
                     ]
                 )
             );

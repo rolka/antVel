@@ -18,7 +18,7 @@
             </li>
             <?php $filterSelected = []; ?>
             @foreach ($refine as $key => $value)
-                @if (trim($value)!='' && $key != 'category_name')
+                @if (trim($value)!='' && $key != 'category_name' && $key != 'page')
                     <li>
                         <small>
                             <?php
